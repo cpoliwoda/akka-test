@@ -1,4 +1,2 @@
 akka-test
 =========
-
-test
