@@ -20,7 +20,7 @@ public class Main3 {
 
     public static void main(String[] args) {
 
-        Config config = ConfigFactory.parseString(Main1.configString);
+        Config config = ConfigFactory.parseString(Configs.createConfig("127.0.0.1", 2554));
 
         ActorSystem system = ActorSystem.create(Main1.actorsystemname, config);
 
@@ -31,7 +31,7 @@ public class Main3 {
 
         greeter.tell(new Greeting("Charlie Parker"));
 
-        system.shutdown();
+//        system.shutdown();
     }
 }
 
