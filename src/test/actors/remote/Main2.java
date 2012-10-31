@@ -31,6 +31,9 @@ public class Main2 {
                 + "@" + Main1.hostname + ":" + 2552 + "/user/" + actorName);
 
         greeter.tell(new Greeting("Charlie Parker"));
+        
+        //close at end the own system2
+        system.shutdown();
     }
 }
 

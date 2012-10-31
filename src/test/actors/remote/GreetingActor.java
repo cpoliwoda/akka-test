@@ -22,6 +22,8 @@ public class GreetingActor extends UntypedActor {
         
         if (message instanceof Greeting) {
             log.info("Hello " + ((Greeting) message).who);
+            
+            getContext().system().shutdown();//closes server -> Main1
         }
     }
 }
