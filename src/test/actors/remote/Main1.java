@@ -17,38 +17,20 @@ import com.typesafe.config.ConfigFactory;
 public class Main1 {
 
     final static String actorsystemname = "MySystem";
-    final static String hostname = "141.2.38.37";
-    final static String port = "0";// 0 means automatic choose free port//"2552";//"1099";
+    final static String hostname = "127.0.0.1";
+    final static String port = "2552"; //"2552";//"1099";
     final static String deployActor = "/greeter";
     final static String actorpath = "user" + deployActor;
-    final static String configString = ""
-            + " akka {\n"
-            + "      actor {\n"
-            + "        provider = \"akka.remote.RemoteActorRefProvider\"\n"
-            + "      }\n"
-//            + "      deployment {\n"
-//            //                + "            default {\n"
-//            //                + "                remote = \""+actorpath+"\"\n" 
-//            //                + "            }\n"
-//            + "             " + deployActor + " {\n"
-//            + "                 remote = \"akka://" + actorsystemname + "@" + hostname + ":" + port + "\"\n"
-//            + "             }"
-//            + "      }\n"
-            + "      remote {\n"
-            + "        transport = \"akka.remote.netty.NettyRemoteTransport\"\n"
-            + "        netty {\n"
-            + "          hostname = \"" + hostname + "\"\n"
-            + "          port = " + port + "\n"
-            + "        }\n"
-            + "      }\n"
-            + "}";
 
     public static void main(String[] args) {
 
-        Config config = ConfigFactory.parseString(configString);
+        String actorName = "greeter";
+        String systemName = "sys1";
 
-        ActorSystem system = ActorSystem.create(actorsystemname, config);
+        Config config = ConfigFactory.parseString(Configs.createConfig("127.0.0.1", 2552, systemName, actorName));
 
+        ActorSystem system = ActorSystem.create(systemName, config);
+        ActorRef greeter = system.actorOf(new Props(GreetingActor.class), actorName);
     }
 }
 
