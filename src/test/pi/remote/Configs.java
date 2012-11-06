@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package test.actors.remote;
+package test.pi.remote;
+
+import test.actors.remote.*;
 
 /**
  *

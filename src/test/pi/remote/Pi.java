@@ -1,14 +1,17 @@
 /**
+ * based on:
  * Copyright (C) 2009-2012 Typesafe Inc. <http://www.typesafe.com>
  * http://doc.akka.io/docs/akka/2.0.1/intro/getting-started-first-java.html
  */
-package test.pi;
+package test.pi.remote;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 public class Pi {
 
@@ -17,13 +20,18 @@ public class Pi {
         pi.calculate(4, 10000, 10000);
     }
 
-    static class Calculate {
-    }
-
     public void calculate(final int nrOfWorkers, final int nrOfElements, final int nrOfMessages) {
-        // Create an Akka system
-        ActorSystem system = ActorSystem.create("PiSystem");
+        
+        String actorName = "greeter";
+        String systemName = "PiSystem";//"sys1";
 
+        Config config = ConfigFactory.parseString(
+                test.actors.remote.Configs.createConfig(
+                    "127.0.0.1", 2552, systemName, actorName));
+
+        // Create an Akka system
+        ActorSystem system = ActorSystem.create(systemName/*, config*/);
+        
         // create the result listener, which will print the result and shutdown the system
         final ActorRef listener = system.actorOf(new Props(Listener.class), "listener");
 
