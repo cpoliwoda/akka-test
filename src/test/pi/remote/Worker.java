@@ -7,7 +7,7 @@ package test.pi.remote;
 import akka.actor.UntypedActor;
 
 public class Worker extends UntypedActor {
-
+    
     private double calculatePiFor(int start, int nrOfElements) {
         double acc = 0.0;
         for (int i = start * nrOfElements; i <= ((start + 1) * nrOfElements - 1); i++) {
@@ -19,10 +19,10 @@ public class Worker extends UntypedActor {
     @Override
     public void onReceive(Object message) {
 
-        // experiment start
-        System.out.println(String.format("Received message '%s' in actor %s",
-                message, getSelf().path().name()));
-        // experiment end
+//        // experiment start
+//        System.out.println(String.format("Received message '%s' in actor %s",
+//                message, getSelf().path().name()));
+//        // experiment end
 
         if (message instanceof Work) {
             

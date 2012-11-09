@@ -15,33 +15,29 @@ import java.util.concurrent.TimeUnit;
 
 public class Master extends UntypedActor {
 
-    private final int nrOfMessages;
-    private final int nrOfElements;
     private double pi;
     private int nrOfResults;
+    private int nrOfMessages;
     private final long start = System.currentTimeMillis();
-    private final ActorRef listener;
-    private final ActorRef workerRouter;
-
-    public Master(final int nrOfWorkers, int nrOfMessages, int nrOfElements, ActorRef listener) {
-        this.nrOfMessages = nrOfMessages;
-        this.nrOfElements = nrOfElements;
-        this.listener = listener;
-
-        workerRouter = createWorkerRouter(nrOfWorkers);
-
-        // experiment start (not needed)
-        for (int i = 0; i < nrOfWorkers; i++) {
-            workerRouter.tell(i, getSelf());
-        }
-        // experiment end
-    }
+    private ActorRef listener;
+    private ActorRef workerRouter;
 
     @Override
     public void onReceive(Object message) {
         if (message instanceof Calculate) {
 
-            createWorkers();
+            Calculate calculate = (Calculate) message;
+
+            listener = calculate.listener;
+            workerRouter = createWorkerRouter(calculate);
+            nrOfMessages = calculate.nrOfMessages;
+
+            // experiment start (not needed)
+            for (int i = 0; i < calculate.nrOfWorkers; i++) {
+                workerRouter.tell(i, getSelf());
+            }
+            // experiment end
+            createWorkers(calculate);
 
         } else if (message instanceof Result) {
 
@@ -52,27 +48,28 @@ public class Master extends UntypedActor {
         }
     }
 
-    private ActorRef createWorkerRouter(final int nrOfWorkers) {
+    private ActorRef createWorkerRouter(Calculate calculate) {
 
         // experiment start
         ArrayList<ActorRef> routees = new ArrayList<ActorRef>();
 
-        String name = "actorname-";
-        for (int i = 0; i < nrOfWorkers; i++) {
-            routees.add(
-                    getContext().actorOf(new Props(Worker.class), name+i));
+        String name = "worker-";
+        Props workerPrpos = new Props(Worker.class);
+
+        for (int i = 0; i < calculate.nrOfWorkers; i++) {
+            routees.add(getContext().actorOf(workerPrpos, name + i));
         }
-        
+
         ArrayList<ActorPath> routeesPath = new ArrayList<ActorPath>();
         for (int i = 0; i < routees.size(); i++) {
-            routeesPath.add(routees.get(i).path());  
+            routeesPath.add(routees.get(i).path());
         }
-        
+
         ArrayList<String> routeesPathString = new ArrayList<String>();
         for (int i = 0; i < routees.size(); i++) {
-            routeesPathString.add(routees.get(i).path().toString());  
+            routeesPathString.add(routees.get(i).path().toString());
         }
-        
+
         return this.getContext().actorOf(
                 new Props(Worker.class).withRouter(new RoundRobinRouter(routeesPathString)),
                 "workerRouter");
@@ -83,9 +80,9 @@ public class Master extends UntypedActor {
 //                "workerRouter");
     }
 
-    private void createWorkers() {
-        for (int i = 0; i < nrOfMessages; i++) {
-            workerRouter.tell(new Work(i, nrOfElements), getSelf());
+    private void createWorkers(Calculate calculate) {
+        for (int i = 0; i < calculate.nrOfMessages; i++) {
+            workerRouter.tell(new Work(i, calculate.nrOfElements), getSelf());
         }
     }
 
