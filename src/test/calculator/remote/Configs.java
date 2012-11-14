@@ -12,59 +12,62 @@ public class Configs {
 
     public static String getCommon() {
         String result =
-                "akka {"
-                + "  actor {"
-                + "    provider = \"akka.remote.RemoteActorRefProvider\""
-                + "  }"
-                + "  remote {"
-                + "    netty {"
-                + "      hostname = \"127.0.0.1\""
-                + "    }"
-                + "  }"
-                + "}";
+                "akka {\n"
+                + "  actor {\n"
+                + "    provider = \"akka.remote.RemoteActorRefProvider\"\n"
+                + "  }\n"
+                + "  remote {\n"
+                + "    netty {\n"
+                + "      hostname = \"127.0.0.1\"\n"
+                + "    }\n"
+                + "  }\n"
+                + "}\n";
 
         return result;
     }
 
     public static String getCalculator() {
         String result =
-                "calculator {"
-                + "  include \"common\""
-                + "  akka {"
-                + "    remote.netty.port = 2552"
-                + "  }"
-                + "}";
+//                "calculator {\n"
+//                + "  include \"common\""
+                 Configs.getCommon()+"\n"
+                + "  akka {\n"
+                + "    remote.netty.port = 2552 \n"
+                + "  }\n";
+//                + "}\n";
 
         return result;
     }
 
     public static String getRemoteLookup() {
         String result =
-                "calculator {"
-                + "  include \"common\""
-                + "  akka {"
-                + "    remote.netty.port = 2553"
-                + "  }"
-                + "}";
+//                "calculator {\n"
+//                + "  include \"common\" \n"
+                 Configs.getCommon()+"\n"
+                + "  akka {\n"
+                + "    remote.netty.port = 2553 \n"
+                + "  }\n";
+//                + "}\n";
 
         return result;
     }
 
     public static String getRemoteCreation() {
         String result =
-                "remotecreation {"
-                + "  include \"common\""
-                + "  akka {"
-                + "    actor {"
-                + "      deployment {"
-                + "        /advancedCalculator {"
-                + "          remote = \"akka://CalculatorApplication@127.0.0.1:2552\""
-                + "        }"
-                + "      }"
-                + "    }"
-                + "    remote.netty.port = 2554"
-                + "  }"
-                + "}";
+//                "remotecreation {\n"
+//                + "  include \"common\" \n"
+                 Configs.getCommon()+"\n"
+                + "  akka {\n"
+                + "    actor {\n"
+                + "      deployment {\n"
+                + "        /advancedCalculator {\n"
+                + "          remote = \"akka://CalculatorApplication@127.0.0.1:2552\"\n"
+                + "        }\n"
+                + "      }\n"
+                + "    }\n"
+                + "    remote.netty.port = 2554 \n"
+                + "  }\n";
+//                + "}\n";
 
         return result;
     }

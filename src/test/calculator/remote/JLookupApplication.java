@@ -8,6 +8,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.kernel.Bootable;
+import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 //#imports
 
@@ -18,8 +19,15 @@ public class JLookupApplication implements Bootable {
   private ActorRef remoteActor;
 
   public JLookupApplication() {
+//    system = ActorSystem.create("LookupApplication", ConfigFactory.load()
+//        .getConfig("remotelookup"));
+    
+      Config config = ConfigFactory.parseString(Configs.getRemoteLookup());
+        
     system = ActorSystem.create("LookupApplication", ConfigFactory.load()
         .getConfig("remotelookup"));
+    
+    
     actor = system.actorOf(new Props(JLookupActor.class));
     remoteActor = system.actorFor(
       "akka://CalculatorApplication@127.0.0.1:2552/user/simpleCalculator");
