@@ -13,7 +13,7 @@ public class Op {
   public interface MathResult extends Serializable {
   }
 
-  static class Add implements MathOp {
+  public static class Add implements MathOp {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -32,7 +32,7 @@ public class Op {
     }
   }
 
-  static class AddResult implements MathResult {
+  public static class AddResult implements MathResult {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -57,7 +57,7 @@ public class Op {
     }
   }
 
-  static class Subtract implements MathOp {
+  public static class Subtract implements MathOp {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -76,7 +76,7 @@ public class Op {
     }
   }
 
-  static class SubtractResult implements MathResult {
+  public static class SubtractResult implements MathResult {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -101,7 +101,7 @@ public class Op {
     }
   }
 
-  static class Multiply implements MathOp {
+  public static class Multiply implements MathOp {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -120,7 +120,7 @@ public class Op {
     }
   }
 
-  static class MultiplicationResult implements MathResult {
+  public static class MultiplicationResult implements MathResult {
     private static final long serialVersionUID = 1L;
     private final int n1;
     private final int n2;
@@ -145,7 +145,7 @@ public class Op {
     }
   }
 
-  static class Divide implements MathOp {
+  public static class Divide implements MathOp {
     private static final long serialVersionUID = 1L;
     private final double n1;
     private final int n2;
@@ -164,7 +164,7 @@ public class Op {
     }
   }
 
-  static class DivisionResult implements MathResult {
+  public static class DivisionResult implements MathResult {
     private static final long serialVersionUID = 1L;
     private final double n1;
     private final int n2;

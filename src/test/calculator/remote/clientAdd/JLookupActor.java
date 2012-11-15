@@ -1,9 +1,11 @@
 /**
  *  Copyright (C) 2009-2012 Typesafe Inc. <http://www.typesafe.com>
  */
-package test.calculator.remote;
+package test.calculator.remote.clientAdd;
 
 import akka.actor.UntypedActor;
+import test.calculator.remote.InternalMsg;
+import test.calculator.remote.Op;
 
 //#actor
 public class JLookupActor extends UntypedActor {

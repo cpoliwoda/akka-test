@@ -1,7 +1,7 @@
 /**
  *  Copyright (C) 2009-2012 Typesafe Inc. <http://www.typesafe.com>
  */
-package test.calculator.remote;
+package test.calculator.remote.server;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -9,6 +9,7 @@ import akka.actor.Props;
 import akka.kernel.Bootable;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import test.calculator.remote.Configs;
 
 //#setup
 public class JCalculatorApplication implements Bootable {

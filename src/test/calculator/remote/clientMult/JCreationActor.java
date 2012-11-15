@@ -1,12 +1,14 @@
 /**
  *  Copyright (C) 2009-2012 Typesafe Inc. <http://www.typesafe.com>
  */
-package test.calculator.remote;
+package test.calculator.remote.clientMult;
 
 import akka.actor.UntypedActor;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import test.calculator.remote.InternalMsg;
+import test.calculator.remote.Op;
 
 //#actor
 public class JCreationActor extends UntypedActor {

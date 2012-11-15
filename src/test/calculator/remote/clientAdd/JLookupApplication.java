@@ -1,7 +1,7 @@
 /**
  *  Copyright (C) 2009-2012 Typesafe Inc. <http://www.typesafe.com>
  */
-package test.calculator.remote;
+package test.calculator.remote.clientAdd;
 
 //#imports
 import akka.actor.ActorRef;
@@ -10,6 +10,9 @@ import akka.actor.Props;
 import akka.kernel.Bootable;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import test.calculator.remote.Configs;
+import test.calculator.remote.InternalMsg;
+import test.calculator.remote.Op;
 //#imports
 
 //#setup

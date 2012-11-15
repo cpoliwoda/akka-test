@@ -6,11 +6,12 @@ package test.calculator.remote;
 import akka.actor.ActorRef;
 
 public class InternalMsg {
-   static class MathOpMsg {
+    
+   public static class MathOpMsg {
        private final ActorRef actor;
        private final Op.MathOp mathOp;
 
-       MathOpMsg(ActorRef actor, Op.MathOp mathOp) {
+       public MathOpMsg(ActorRef actor, Op.MathOp mathOp) {
            this.actor = actor;
            this.mathOp = mathOp;
        }
@@ -23,4 +24,5 @@ public class InternalMsg {
            return mathOp;
        }
    }
+   
 }
