@@ -7,11 +7,15 @@ package test.calculator.remote;
 import java.util.Random;
 
 public class JLookupApp {
+    
     public static void main(String[] args) {
         JLookupApplication app = new JLookupApplication();
         System.out.println("Started Lookup Application");
+        
         Random r = new Random();
-        while (true) {
+//        while (true) {
+        for (int i = 0; i < 100; i++) {
+            
             if (r.nextInt(100) % 2 == 0) {
                 app.doSomething(new Op.Add(r.nextInt(100), r.nextInt(100)));    
             } else {
@@ -23,5 +27,7 @@ public class JLookupApp {
             } catch (InterruptedException e) {               
             }
         }
+        
+        app.shutdown();
     }
 }

@@ -12,19 +12,21 @@ public class JAdvancedCalculatorActor extends UntypedActor {
 
     if (message instanceof Op.Multiply) {
       Op.Multiply multiply = (Op.Multiply) message;
-      System.out.println("Calculating " + multiply.getN1() + " * "
-          + multiply.getN2());
-      getSender().tell(
-          new Op.MultiplicationResult(multiply.getN1(), multiply.getN2(),
-              multiply.getN1() * multiply.getN2()), getSelf());
+      
+      System.out.println("Calculating " + multiply.getN1() + " * " + multiply.getN2());
+      
+      getSender().tell( new Op.MultiplicationResult(
+              multiply.getN1(), multiply.getN2(),multiply.getN1() * multiply.getN2()),
+              getSelf());
 
     } else if (message instanceof Op.Divide) {
       Op.Divide divide = (Op.Divide) message;
-      System.out.println("Calculating " + divide.getN1() + " / "
-          + divide.getN2());
-      getSender().tell(
-          new Op.DivisionResult(divide.getN1(), divide.getN2(), divide.getN1()
-              / divide.getN2()), getSelf());
+      
+      System.out.println("Calculating " + divide.getN1() + " / " + divide.getN2());
+      
+      getSender().tell(new Op.DivisionResult(
+              divide.getN1(), divide.getN2(), divide.getN1() / divide.getN2()),
+              getSelf());
 
     } else {
       unhandled(message);

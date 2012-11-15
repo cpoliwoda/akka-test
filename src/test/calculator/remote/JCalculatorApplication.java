@@ -19,8 +19,7 @@ public class JCalculatorApplication implements Bootable {
 //    system = ActorSystem.create("CalculatorApplication", ConfigFactory.load()
 //        .getConfig("calculator"));
 
-        Config config = ConfigFactory.parseString(Configs.getCalculator());
-        
+        Config config = ConfigFactory.parseString(Configs.getCalculator());     
         system = ActorSystem.create("CalculatorApplication", config);
 
 

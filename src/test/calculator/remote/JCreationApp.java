@@ -7,11 +7,15 @@ package test.calculator.remote;
 import java.util.Random;
 
 public class JCreationApp {
+
     public static void main(String[] args) {
         JCreationApplication app = new JCreationApplication();
         System.out.println("Started Creation Application");
+
         Random r = new Random();
-        while (true) {
+//        while (true) {
+        for (int i = 0; i < 100; i++) {
+         
             if (r.nextInt(100) % 2 == 0) {
                 app.doSomething(new Op.Multiply(r.nextInt(100), r.nextInt(100)));
             } else {
@@ -23,5 +27,7 @@ public class JCreationApp {
             } catch (InterruptedException e) {
             }
         }
+        
+        app.shutdown();
     }
 }

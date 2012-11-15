@@ -14,36 +14,34 @@ import com.typesafe.config.ConfigFactory;
 
 //#setup
 public class JLookupApplication implements Bootable {
-  private ActorSystem system;
-  private ActorRef actor;
-  private ActorRef remoteActor;
 
-  public JLookupApplication() {
+    private ActorSystem system;
+    private ActorRef actor;
+    private ActorRef remoteActor;
+
+    public JLookupApplication() {
 //    system = ActorSystem.create("LookupApplication", ConfigFactory.load()
 //        .getConfig("remotelookup"));
-    
-      Config config = ConfigFactory.parseString(Configs.getRemoteLookup());
-        
-    system = ActorSystem.create("LookupApplication", ConfigFactory.load()
-        .getConfig("remotelookup"));
-    
-    
-    actor = system.actorOf(new Props(JLookupActor.class));
-    remoteActor = system.actorFor(
-      "akka://CalculatorApplication@127.0.0.1:2552/user/simpleCalculator");
-  }
 
-  public void doSomething(Op.MathOp mathOp) {
-    actor.tell(new InternalMsg.MathOpMsg(remoteActor, mathOp), null);
-  }
+        Config config = ConfigFactory.parseString(Configs.getRemoteLookup());
+        system = ActorSystem.create("LookupApplication", config);
 
-  @Override
-  public void startup() {
-  }
+        actor = system.actorOf(new Props(JLookupActor.class));
+        remoteActor = system.actorFor(
+                "akka://CalculatorApplication@127.0.0.1:2552/user/simpleCalculator");
+    }
 
-  @Override
-  public void shutdown() {
-    system.shutdown();
-  }
+    public void doSomething(Op.MathOp mathOp) {
+        actor.tell(new InternalMsg.MathOpMsg(remoteActor, mathOp), null);
+    }
+
+    @Override
+    public void startup() {
+    }
+
+    @Override
+    public void shutdown() {
+        system.shutdown();
+    }
 }
 // #setup
