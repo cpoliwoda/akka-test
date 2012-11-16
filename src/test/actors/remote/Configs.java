@@ -18,7 +18,7 @@ public class Configs {
         if (deploySystem != null && deployActorName != null) {
             result += "deployment { \n"
                     + "/" + deployActorName + " {\n"
-                    + "remote = \"akka://" + deploySystem + "@127.0.0.1:2552\"\n"
+                    + "remote = \"akka://" + deploySystem + "@"+ip+":"+port+"\"\n"
                     + "}\n"
                     + "}\n";
         }

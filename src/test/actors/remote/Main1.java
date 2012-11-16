@@ -14,17 +14,17 @@ import com.typesafe.config.ConfigFactory;
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class Main1 {
+public class Main1 { // SERVER
 
-    final static String actorsystemname = "MySystem";
+//    final static String actorsystemname = "MySystem";
     final static String hostname = "127.0.0.1";
     final static String port = "2552"; //"2552";//"1099";
     final static String deployActor = "/greeter";
     final static String actorpath = "user" + deployActor;
+    final static String actorName = "greeter";
 
     public static void main(String[] args) {
 
-        String actorName = "greeter";
         String systemName = "sys1";
 
         Config config = ConfigFactory.parseString(Configs.createConfig("127.0.0.1", 2552, systemName, actorName));

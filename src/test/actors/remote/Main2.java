@@ -14,21 +14,20 @@ import com.typesafe.config.ConfigFactory;
  *
  * @author Christian Poliwoda <christian.poliwoda@gcsc.uni-frankfurt.de>
  */
-public class Main2 {
+public class Main2 { // Client
 
     public static void main(String[] args) {
 
-        String actorName = "greeter";
         String systemName = "sys2";
 
-        Config config = ConfigFactory.parseString(Configs.createConfig("127.0.0.1", 2553, null, null));
+        Config config = ConfigFactory.parseString(Configs.createConfig("127.0.0.1", 2553));
 
         ActorSystem system = ActorSystem.create(systemName, config);
 
         // REMOTE
         //    akka://<actorsystemname>@<hostname>:<port>/<actor path>
         ActorRef greeter = system.actorFor("akka://" + "sys1"
-                + "@" + Main1.hostname + ":" + 2552 + "/user/" + actorName);
+                + "@" + Main1.hostname + ":" + 2552 + "/user/" + Main1.actorName);
 
         greeter.tell(new Greeting("Charlie Parker"));
         
