@@ -7,14 +7,34 @@ package test.calculator.remote.clientMult;
 import java.util.Random;
 import test.calculator.remote.Op;
 
+/**
+ * Simulates the start of a client application, 
+ * sending some request to the client and 
+ * shutting down the client after work is done.
+ * 
+ * 
+ */
 public class JCreationApp {
 
     public static void main(String[] args) {
+        //create client application
         JCreationApplication app = new JCreationApplication();
         System.out.println("Started Creation Application");
+        
+        generatSomeRequestForClientApp(app);
+        
+        app.shutdown();
+    }
 
+    /**
+     * generating some requests to the client
+     * 
+     * @param app the client app which we want something to do
+     */
+    private static void generatSomeRequestForClientApp(JCreationApplication app) {
+        
         Random r = new Random();
-//        while (true) {
+        
         for (int i = 0; i < 100; i++) {
          
             if (r.nextInt(100) % 2 == 0) {
@@ -28,7 +48,5 @@ public class JCreationApp {
             } catch (InterruptedException e) {
             }
         }
-        
-        app.shutdown();
     }
 }

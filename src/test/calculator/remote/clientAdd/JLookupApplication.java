@@ -23,17 +23,23 @@ public class JLookupApplication implements Bootable {
     private ActorRef remoteActor;
 
     public JLookupApplication() {
-//    system = ActorSystem.create("LookupApplication", ConfigFactory.load()
-//        .getConfig("remotelookup"));
-
         Config config = ConfigFactory.parseString(Configs.getRemoteLookup());
         system = ActorSystem.create("LookupApplication", config);
 
+        //client actor
         actor = system.actorOf(new Props(JLookupActor.class));
+        
+        //server actor to interact with
         remoteActor = system.actorFor(
                 "akka://CalculatorApplication@127.0.0.1:2552/user/simpleCalculator");
     }
 
+    /**
+     * Calling this method if you want the client something to do.
+     * The client actor instead redirects the request to the server actor.
+     * 
+     * @param mathOp the mathematic operation that should be calculated
+     */
     public void doSomething(Op.MathOp mathOp) {
         actor.tell(new InternalMsg.MathOpMsg(remoteActor, mathOp), null);
     }

@@ -21,13 +21,14 @@ public class JCreationApplication implements Bootable {
     private ActorRef remoteActor;
 
     public JCreationApplication() {
-//    system = ActorSystem.create("CreationApplication", ConfigFactory.load()
-//        .getConfig("remotecreation"));
-
         Config config = ConfigFactory.parseString(Configs.getRemoteCreation());
         system = ActorSystem.create("CreationApplication", config);
 
+        //client actor
         actor = system.actorOf(new Props(JCreationActor.class));
+        
+        //clinent actor that is created on client system,
+        //but should run on server system !!
         remoteActor = system.actorOf(new Props(JAdvancedCalculatorActor.class),
                 "advancedCalculator");
     }

@@ -11,6 +11,10 @@ import test.calculator.remote.InternalMsg;
 import test.calculator.remote.Op;
 
 //#actor
+/**
+ * Client actor
+ * 
+ */
 public class JCreationActor extends UntypedActor {
   private static final NumberFormat formatter = new DecimalFormat("#0.00");
 
@@ -18,13 +22,15 @@ public class JCreationActor extends UntypedActor {
   public void onReceive(Object message) throws Exception {
 
     if (message instanceof InternalMsg.MathOpMsg) {
-      // forward math op to server actor
       InternalMsg.MathOpMsg msg = (InternalMsg.MathOpMsg) message;
       
+      // forward math op to server actor
       msg.getActor().tell(msg.getMathOp(), getSelf());
 
     } else if (message instanceof Op.MathResult) {
-      // receive reply from server actor
+        
+      //START: receive reply from server actor
+        
       if (message instanceof Op.MultiplicationResult) {
         Op.MultiplicationResult result = (Op.MultiplicationResult) message;
         
@@ -37,6 +43,8 @@ public class JCreationActor extends UntypedActor {
         System.out.println("Div result: " + 
                 result.getN1() + " / " + result.getN2() + " = " + formatter.format(result.getResult()));
       }
+      //END: receive reply from server actor
+      
     } else {
       unhandled(message);
     }
