@@ -19,13 +19,19 @@ public class Pi_Client {
     }
 
     public void calculate(final int nrOfWorkers, final int nrOfElements, final int nrOfMessages) {
-        
-        Config config = ConfigFactory.parseString( Configs.createConfig(
-                    Configs.serverIP, Configs.clientPort, Configs.clientSystemName, Configs.clientActorName));
+        System.out.println("Pi_Client.calculate() START:");
 
-        ////remote
+//        Config config = ConfigFactory.parseString(Configs.createConfigForClient(
+//                Configs.serverIP, Configs.clientPort));//, Configs.clientSystemName, Configs.clientActorName));
+
+        Config config = ConfigFactory.parseString(Configs.getConfigForClientRemoteLookup());
+        System.out.println("Pi_Client: ActorSystem.create()");
+
+        ////local
         ActorSystem system = ActorSystem.create(Configs.clientSystemName, config);
-        
+
+        System.out.println("Pi_Client: system.actorOf(" + Configs.clientActorName + ")");
+
         // create the result listener, which will print the result and shutdown the system
         ////local
         final ActorRef listener = system.actorOf(new Props(Listener.class), Configs.clientActorName);
@@ -33,10 +39,24 @@ public class Pi_Client {
         // connect to server
         // REMOTE
         //    akka://<actorsystemname>@<hostname>:<port>/<actor path>
-        final ActorRef master = system.actorFor("akka://" + Configs.serverSystemName
-                + "@" + Configs.serverIP + ":" + Configs.serverPort + "/user/" + Configs.serverActorName);
+        String remotePathForActor = "akka://" + Configs.serverSystemName + "@"
+                + Configs.serverIP + ":" + Configs.serverPort + "/user/" + Configs.serverActorName;
+
+        System.out.println("Pi_Client: REMOTE system.actorOf( \n " + remotePathForActor + " )");
+
+        final ActorRef master = system.actorFor(remotePathForActor);
+
+        System.out.println("master = " + master);
+        System.out.println("Pi_Client: master.tell( Calculate )");
 
         // start the calculation
         master.tell(new Calculate(nrOfWorkers, nrOfElements, nrOfMessages, listener));
+
+        System.out.println("Pi_Client: master.tell( Shutdown )");
+
+        // shutdown server after calculation
+        master.tell(new Shutdown());
+
+        System.out.println("Pi_Client.calculate() END:");
     }
 }

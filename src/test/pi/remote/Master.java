@@ -24,7 +24,10 @@ public class Master extends UntypedActor {
 
     @Override
     public void onReceive(Object message) {
+        System.out.println(getClass().getSimpleName() + ".onReceive( message ):");
+
         if (message instanceof Calculate) {
+            System.out.println(" message instanceof Calculate");
 
             Calculate calculate = (Calculate) message;
 
@@ -40,10 +43,18 @@ public class Master extends UntypedActor {
             createWorkers(calculate);
 
         } else if (message instanceof Result) {
+            System.out.println(" message instanceof Result");
 
             collectResults((Result) message);
 
+        } else if (message instanceof Shutdown) {
+            System.out.println(" message instanceof Shutdown");
+            
+            getContext().system().shutdown();
+            
         } else {
+            System.out.println(" message unhandled");
+
             unhandled(message);
         }
     }
