@@ -27,8 +27,9 @@ public class JCreationApplication implements Bootable {
         //client actor
         actor = system.actorOf(new Props(JCreationActor.class));
         
-        //clinent actor that is created on client system,
-        //but should run on server system !!
+        //client actor that seems to be created in client system,
+        //BUT is created and runs on SERVER system.
+        //These is controlled via CONFIG file (see Configs.getRemoteCreation() ).
         remoteActor = system.actorOf(new Props(JAdvancedCalculatorActor.class),
                 "advancedCalculator");
     }
